@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import './App.css';
 import Logo from "./assets/logo.png"
 
 import Header from "./components/Header";
-import SearchSortBar from "./components/SearchSortBar";
 import NewsContent from "./NewsContent";
+
+
 
 
 
@@ -17,7 +18,6 @@ function App() {
       </div>
       <div className="main-content">
         <Header />
-        <SearchSortBar />
         <NewsContent />
       </div>
     </div>

@@ -3,21 +3,27 @@ import React, { useEffect, useState } from 'react';
 
 import NewsCard from "./components/NewsCard";
 
+import Button from "react-bootstrap/Button";
+
+
 const NewsContent = () => {
 
     const [newsData, setNewsData] = useState([]);
     const [error, setError] = useState();
     const [loading, setLoading] = useState(false);
 
+    const [searchTerm, setSearchTerm] = useState("");
+    const [searchResults, setSearchResults] = useState([]);
+
+
     useEffect(() => {
         setLoading(true);
         const getNews = async () => {
             var response = await axios.get("https://api.publicapis.org/entries");
-            if(response.status === 200) {
+            if (response.status === 200) {
                 let data = Object.entries(response.data);
                 setNewsData(data[1][1]);
                 setError(false);
-                console.log(data[1][1])
                 return;
             }
             setError(response.error);
@@ -25,26 +31,62 @@ const NewsContent = () => {
         getNews();
         setLoading(false);
         return;
-    }, [newsData])
+    }, [])
 
+    const handleSearchInput = (e) => {
+        e.preventDefault();
+        setSearchTerm(e.target.value);
+    }
 
-    return(
-        <div className="news-content">
-            <div className="row">
-                <div className="s10">
-                {newsData && newsData.slice(0,20).map((news) => {
-                return(
-                    <NewsCard
-                        title={news.API}
-                        description={news.Description}
-                        category={news.Category}
-                        key={Math.random() * 12}
-                    />
-                );
-            })}
+    /*useEffect(() => {
+
+        const results = newsData.filter((news) => {
+            news.API.toLowerCase().includes(searchTerm.toLowerCase());
+        })
+        setNewsData(results);
+        console.log(results)
+    }, [searchTerm])*/
+
+    return (
+        <>
+            <div className="bar">
+                <div className="bar-card">
+                    <div className="row search-content">
+                        <div className="col m6 s12">
+                            <div className="row">
+                                <div className="col m5 s12">
+                                    <input
+                                        placeholder="Search..."
+                                        id="search"
+                                        value={searchTerm}
+                                        onChange={handleSearchInput}
+                                    />
+                                </div>
+                                <div className="col m1 s12">
+                                    <Button className="search-button" onClick={handleSearchInput}>Search</Button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+            <div className="news-content">
+                <div className="row">
+                    <div className="s10">
+                        {newsData && newsData.map((news) => {
+                            return (
+                                <NewsCard
+                                    title={news.API}
+                                    description={news.Description}
+                                    category={news.Category}
+                                    key={Math.random() * 12}
+                                />
+                            );
+                        })}
+                    </div>
+                </div>
+            </div>
+        </>
     );
 }
 

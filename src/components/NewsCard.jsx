@@ -13,7 +13,7 @@ const NewsCard = ({ title, description, category }) => {
                             <div className=" col m6 s6">
                                 <h6>Category: {category}</h6>
                             </div>
-                            <div className=" col m6 s6">
+                            <div clas   sName=" col m6 s6">
                                 <h6>Category: {category}</h6>
                             </div>
                         </div>
