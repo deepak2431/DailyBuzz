@@ -19,9 +19,6 @@ function App() {
         <Header />
         <SearchSortBar />
         <NewsContent />
-        <NewsContent />
-        <NewsContent />
-
       </div>
     </div>
   );
