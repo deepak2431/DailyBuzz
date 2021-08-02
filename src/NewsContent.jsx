@@ -30,8 +30,8 @@ const NewsContent = () => {
                 let data = Object.entries(response.data);
                 setNewsData(data[1][1]);
                 setError(false);
-                //setPageCount(Math.ceil((data).length / pageCount));
-                console.log((data[1]).length)
+                setPageCount(Math.ceil((((data[1][1]).length)/perPage)));
+                console.log(pageCount)
                 return;
             }
             setError(response.error);
@@ -39,11 +39,17 @@ const NewsContent = () => {
         getNews();
         setLoading(false);
         return;
-    }, [])
+    }, [offset])
 
     const handleSearchInput = (e) => {
         e.preventDefault();
         setSearchTerm(e.target.value);
+    }
+
+    const handlePageClick = (e) => {
+        const selectedPage = e.selected;
+        setOffset(selectedPage + 1 + perPage);
+        window.scrollTo(0, 0)
     }
 
     /*useEffect(() => {
@@ -81,7 +87,7 @@ const NewsContent = () => {
             <div className="news-content">
                 <div className="row">
                     <div className="s10">
-                        {newsData && newsData.map((news) => {
+                        {newsData && newsData.slice(offset, offset+perPage).map((news) => {
                             return (
                                 <NewsCard
                                     title={news.API}
@@ -93,6 +99,20 @@ const NewsContent = () => {
                         })}
                     </div>
                 </div>
+            </div>
+            <div className="pagination">
+            <ReactPaginate
+                previousLabel={"Prev"}
+                nextClassName={"Next"}
+                breakClassName={"..."}
+                pageCount={pageCount}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={5}
+                onPageChange={handlePageClick}
+                containerClassName={"pagination"}
+                subContainerClassName={"pages pagination"}
+                activeClassName={"active"}
+             />
             </div>
         </>
     );
