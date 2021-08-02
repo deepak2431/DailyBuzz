@@ -1,5 +1,7 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import ReactPaginate from 'react-paginate';
+import axios from 'axios';
+
 
 import NewsCard from "./components/NewsCard";
 
@@ -15,6 +17,10 @@ const NewsContent = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState([]);
 
+    const [pageCount, setPageCount] = useState(0);
+    const [perPage] = useState(10);
+    const [offset, setOffset] = useState(0);
+
 
     useEffect(() => {
         setLoading(true);
@@ -24,6 +30,8 @@ const NewsContent = () => {
                 let data = Object.entries(response.data);
                 setNewsData(data[1][1]);
                 setError(false);
+                //setPageCount(Math.ceil((data).length / pageCount));
+                console.log((data[1]).length)
                 return;
             }
             setError(response.error);
