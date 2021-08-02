@@ -1,6 +1,6 @@
 import React from 'react';
 
-const NewsCard = ({ title, description, category }) => {
+const NewsCard = ({ title, description, date, author }) => {
 
     return (
         <div className="news-card">
@@ -11,10 +11,10 @@ const NewsCard = ({ title, description, category }) => {
                         <p>{description}</p>
                         <div className="row">
                             <div className=" col m6 s6">
-                                <h6>Category: {category}</h6>
+                                <h6>Author: {author}</h6>
                             </div>
                             <div clas   sName=" col m6 s6">
-                                <h6>Category: {category}</h6>
+                                <h6>Published Date: {date}</h6>
                             </div>
                         </div>
                     </div>

@@ -25,13 +25,12 @@ const NewsContent = () => {
     useEffect(() => {
         setLoading(true);
         const getNews = async () => {
-            var response = await axios.get("https://api.publicapis.org/entries");
+            var response = await axios.get("https://newsapi.org/v2/everything?q=stock&apiKey=b9af8544c5c4446ab8cd327970f43466");
             if (response.status === 200) {
-                let data = Object.entries(response.data);
-                setNewsData(data[1][1]);
+                let data = response.data;
+                setNewsData(data.articles);
                 setError(false);
-                setPageCount(Math.ceil((((data[1][1]).length)/perPage)));
-                console.log(pageCount)
+                setPageCount(Math.ceil(((data.articles).length)/perPage))
                 return;
             }
             setError(response.error);
@@ -55,11 +54,18 @@ const NewsContent = () => {
     /*useEffect(() => {
 
         const results = newsData.filter((news) => {
-            news.API.toLowerCase().includes(searchTerm.toLowerCase());
+            news.title.toLowerCase().includes(searchTerm.toLowerCase());
         })
         setNewsData(results);
         console.log(results)
     }, [searchTerm])*/
+
+    const handleSearch = () => {
+        const results = newsData.filter((news) => {
+            news.title.toLowerCase().includes(searchTerm.toLowerCase());
+        })
+        setNewsData(results);
+    }
 
     return (
         <>
@@ -77,7 +83,7 @@ const NewsContent = () => {
                                     />
                                 </div>
                                 <div className="col m1 s12">
-                                    <Button className="search-button" onClick={handleSearchInput}>Search</Button>
+                                    <Button className="search-button" onClick={handleSearch}>Search</Button>
                                 </div>
                             </div>
                         </div>
@@ -90,9 +96,10 @@ const NewsContent = () => {
                         {newsData && newsData.slice(offset, offset+perPage).map((news) => {
                             return (
                                 <NewsCard
-                                    title={news.API}
-                                    description={news.Description}
-                                    category={news.Category}
+                                    title={news.title}
+                                    description={news.description}
+                                    date={news.publishedAt}
+                                    author={news.author}
                                     key={Math.random() * 12}
                                 />
                             );
