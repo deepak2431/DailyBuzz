@@ -63,3 +63,17 @@
   border-radius: 20px;
   box-shadow: 3px 3px 3px 3px grey;
 }
+.news-img {
+  width: 300px;
+}
+
+
+/* Mobile Screen */
+@media only screen and (max-width: 768px) {
+  .bar-card {
+    height: 250px;
+  }
+  .news-content-card {
+    height: 580px;
+  }
+}

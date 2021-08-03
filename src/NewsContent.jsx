@@ -6,6 +6,7 @@ import axios from 'axios';
 import NewsCard from "./components/NewsCard";
 
 import Button from "react-bootstrap/Button";
+import Select from 'react-select';
 
 
 const NewsContent = () => {
@@ -13,24 +14,35 @@ const NewsContent = () => {
     const [newsData, setNewsData] = useState([]);
     const [error, setError] = useState();
     const [loading, setLoading] = useState(false);
+    const [category, setCategory] = useState('technology');
 
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState([]);
 
+    const perPage = 10;
     const [pageCount, setPageCount] = useState(0);
-    const [perPage] = useState(10);
     const [offset, setOffset] = useState(0);
+
+    const categoryList = [
+        { value: 'bitcoin', label: 'Bitcoin' },
+        { value: 'stocks', label: 'Stocks' },
+        { value: 'mobiles', label: 'Mobiles' },
+        { value: 'amazon', label: 'Amazon' },
+        { value: 'latest', label: 'Latest' },
+        { values: 'top', label: 'Top News'}
+
+      ]
 
 
     useEffect(() => {
         setLoading(true);
         const getNews = async () => {
-            var response = await axios.get("https://newsapi.org/v2/everything?q=stock&apiKey=b9af8544c5c4446ab8cd327970f43466");
+            var response = await axios.get(`https://newsapi.org/v2/everything?q=${category}&apiKey=b9af8544c5c4446ab8cd327970f43466`);
             if (response.status === 200) {
                 let data = response.data;
                 setNewsData(data.articles);
                 setError(false);
-                setPageCount(Math.ceil(((data.articles).length)/perPage))
+                setPageCount(Math.ceil(((data.articles).length) / perPage))
                 return;
             }
             setError(response.error);
@@ -38,7 +50,7 @@ const NewsContent = () => {
         getNews();
         setLoading(false);
         return;
-    }, [offset])
+    }, [offset , category])
 
     const handleSearchInput = (e) => {
         e.preventDefault();
@@ -49,6 +61,10 @@ const NewsContent = () => {
         const selectedPage = e.selected;
         setOffset(selectedPage + 1 + perPage);
         window.scrollTo(0, 0)
+    }
+
+    const handleCategoryChange = (e) => {
+        setCategory(e.value)
     }
 
     /*useEffect(() => {
@@ -87,19 +103,27 @@ const NewsContent = () => {
                                 </div>
                             </div>
                         </div>
+                        <div className="col m3 s12">
+                        <Select 
+                            options={categoryList}
+                            label="Select Category"
+                            onChange={handleCategoryChange}
+                        />
+                        </div>
                     </div>
                 </div>
             </div>
             <div className="news-content">
                 <div className="row">
                     <div className="s10">
-                        {newsData && newsData.slice(offset, offset+perPage).map((news) => {
+                        {newsData && newsData.slice(offset, offset + perPage).map((news) => {
                             return (
                                 <NewsCard
                                     title={news.title}
                                     description={news.description}
                                     date={news.publishedAt}
                                     author={news.author}
+                                    imageUrl={news.urlToImage}
                                     key={Math.random() * 12}
                                 />
                             );
@@ -108,18 +132,18 @@ const NewsContent = () => {
                 </div>
             </div>
             <div className="pagination">
-            <ReactPaginate
-                previousLabel={"Prev"}
-                nextClassName={"Next"}
-                breakClassName={"..."}
-                pageCount={pageCount}
-                marginPagesDisplayed={2}
-                pageRangeDisplayed={5}
-                onPageChange={handlePageClick}
-                containerClassName={"pagination"}
-                subContainerClassName={"pages pagination"}
-                activeClassName={"active"}
-             />
+                <ReactPaginate
+                    previousLabel={"Prev"}
+                    nextClassName={"Next"}
+                    breakClassName={"..."}
+                    pageCount={pageCount}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={handlePageClick}
+                    containerClassName={"pagination"}
+                    subContainerClassName={"pages pagination"}
+                    activeClassName={"active"}
+                />
             </div>
         </>
     );

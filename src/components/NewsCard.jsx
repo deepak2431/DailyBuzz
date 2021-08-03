@@ -1,12 +1,15 @@
 import React from 'react';
 
-const NewsCard = ({ title, description, date, author }) => {
+const NewsCard = ({ title, description, date, author, imageUrl }) => {
 
     return (
         <div className="news-card">
             <div className="news-content-card">
                 <div className="row">
-                    <div className="col s12">
+                    <div className="col m3 s12">
+                        <img  className="news-img" src={imageUrl} alt="News" />
+                    </div>
+                    <div className="col m9 s12">
                         <h4>{title}</h4>
                         <p>{description}</p>
                         <div className="row">
