@@ -12,12 +12,12 @@ import Select from 'react-select';
 const NewsContent = () => {
 
     const [newsData, setNewsData] = useState([]);
-    const [error, setError] = useState();
-    const [loading, setLoading] = useState(false);
+    //const [error, setError] = useState();
+    //const [loading, setLoading] = useState(false);
     const [category, setCategory] = useState('technology');
 
     const [searchTerm, setSearchTerm] = useState("");
-    const [searchResults, setSearchResults] = useState([]);
+    const [searchResults, setSearchResults] = useState(newsData);
 
     const perPage = 10;
     const [pageCount, setPageCount] = useState(0);
@@ -35,20 +35,21 @@ const NewsContent = () => {
 
 
     useEffect(() => {
-        setLoading(true);
+        //setLoading(true);
         const getNews = async () => {
             var response = await axios.get(`https://newsapi.org/v2/everything?q=${category}&apiKey=b9af8544c5c4446ab8cd327970f43466`);
             if (response.status === 200) {
                 let data = response.data;
                 setNewsData(data.articles);
-                setError(false);
+                setSearchResults(data.articles);
+                //setError(false);
                 setPageCount(Math.ceil(((data.articles).length) / perPage))
                 return;
             }
-            setError(response.error);
+            //setError(response.error);
         }
         getNews();
-        setLoading(false);
+        //setLoading(false);
         return;
     }, [offset , category])
 
@@ -67,21 +68,13 @@ const NewsContent = () => {
         setCategory(e.value)
     }
 
-    /*useEffect(() => {
-
+    useEffect(() => {
         const results = newsData.filter((news) => {
-            news.title.toLowerCase().includes(searchTerm.toLowerCase());
+            return (news.title.toLowerCase().includes(searchTerm.toLowerCase())) 
+             
         })
-        setNewsData(results);
-        console.log(results)
-    }, [searchTerm])*/
-
-    const handleSearch = () => {
-        const results = newsData.filter((news) => {
-            news.title.toLowerCase().includes(searchTerm.toLowerCase());
-        })
-        setNewsData(results);
-    }
+        setSearchResults(results);
+    }, [searchTerm, newsData])
 
     return (
         <>
@@ -99,7 +92,7 @@ const NewsContent = () => {
                                     />
                                 </div>
                                 <div className="col m1 s12">
-                                    <Button className="search-button" onClick={handleSearch}>Search</Button>
+                                    <Button className="search-button" onClick={handleSearchInput}>Search</Button>
                                 </div>
                             </div>
                         </div>
@@ -116,7 +109,7 @@ const NewsContent = () => {
             <div className="news-content">
                 <div className="row">
                     <div className="s10">
-                        {newsData && newsData.slice(offset, offset + perPage).map((news) => {
+                        {newsData && searchResults.slice(offset, offset + perPage).map((news) => {
                             return (
                                 <NewsCard
                                     title={news.title}
