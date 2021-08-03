@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import axios from 'axios';
+import * as uuid from 'uuid';
 
 
 import NewsCard from "./components/NewsCard";
@@ -12,8 +13,6 @@ import Select from 'react-select';
 const NewsContent = () => {
 
     const [newsData, setNewsData] = useState([]);
-    //const [error, setError] = useState();
-    //const [loading, setLoading] = useState(false);
     const [category, setCategory] = useState('technology');
 
     const [searchTerm, setSearchTerm] = useState("");
@@ -42,14 +41,11 @@ const NewsContent = () => {
                 let data = response.data;
                 setNewsData(data.articles);
                 setSearchResults(data.articles);
-                //setError(false);
                 setPageCount(Math.ceil(((data.articles).length) / perPage))
                 return;
             }
-            //setError(response.error);
         }
         getNews();
-        //setLoading(false);
         return;
     }, [offset , category])
 
@@ -117,7 +113,9 @@ const NewsContent = () => {
                                     date={news.publishedAt}
                                     author={news.author}
                                     imageUrl={news.urlToImage}
-                                    key={Math.random() * 12}
+                                    content={news.content}
+                                    key={news.id}
+                                    id={uuid.v4()}
                                 />
                             );
                         })}
