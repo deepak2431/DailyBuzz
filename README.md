@@ -93,7 +93,7 @@ Follow the given link to make a successful and valid PR: https://help.github.com
 For any doubts related to the issues, i.e., to understand the issue better etc, comment down your queries on the respective issue.
 
 <h2 id="license">License</h2>
-This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/deepak2431/DailyBuzz/blob/master/LICENSE.md) file for details
+<p>This project is licensed under the MIT License - see the <a href="https://github.com/deepak2431/DailyBuzz/blob/master/LICENSE.md">License</a> for more details.
 
 
 
