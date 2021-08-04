@@ -12,18 +12,8 @@
     <li><a href="#how-I-develop">➤ How I developed this project?</a></li>
     <li><a href="#other-features"> ➤ What other features and improvements could be done?</a></li>
     <li><a href="#getting-started"> ➤ Getting started</a></li>
-    <li>
-      <a href="#preprocessing"> ➤ Preprocessing</a>
-      <ul>
-        <li><a href="#preprocessed-data">Pre-processed data</a></li>
-        <li><a href="#statistical-feature">Statistical feature</a></li>
-        <li><a href="#topological-feature">Topological feature</a></li>
-      </ul>
-    </li>
-    <!--<li><a href="#experiments">Experiments</a></li>-->
-    <li><a href="#results-and-discussion"> ➤ Results and Discussion</a></li>
-    <li><a href="#references"> ➤ References</a></li>
-    <li><a href="#contributors"> ➤ Contributors</a></li>
+     <li><a href="#contribute"> ➤ Contributing guidelines</a></li>
+     <li><a href="#license"> ➤ License</a></li>
   </ol>
 </details>
 
@@ -101,5 +91,11 @@ Follow the given link to make a successful and valid PR: https://help.github.com
 1. Make PR title in this format: `Fixes #IssueNo : Name of Issue`
 
 For any doubts related to the issues, i.e., to understand the issue better etc, comment down your queries on the respective issue.
+
+<h2 id="license">License</h2>
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/deepak2431/DailyBuzz/blob/master/LICENSE.md) file for details
+
+
+
 
     
